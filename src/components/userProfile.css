@@ -1,0 +1,80 @@
+.userForm{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    margin: 2rem auto;
+    width: 40rem;
+    background-color: #D4EEFF;
+    border-radius: 20px;
+    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.15);
+}
+
+.userTitle{
+    color: #F2561D;
+    text-align: center;
+    margin: 2rem 0 0 0;
+}
+
+.userNames{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    width: 90%;
+}
+
+.userNames label{
+    width: 5rem;
+}
+
+.userInput{
+    width: 25rem;
+    border: none;
+    background-color:#D4EEFF;
+}
+
+.nameInput{
+    width: 8rem;
+    border: none;
+    background-color: #D4EEFF;
+}
+
+.fullUserInput{
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    border-bottom: 1px solid rebeccapurple;
+    width: 90%;
+    margin-bottom: 2rem;
+}
+
+#firstName{
+    margin-right: 2rem;
+}
+
+.userBio{
+    border: 1px solid  rebeccapurple;
+    border-radius: 6px;
+    width: 85%;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+#change{
+    background-color: #43D9BD;
+    padding: 1rem;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    margin: 2rem;
+    border-radius: 6px;
+    border: none;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 20px;
+    width: 20rem;
+    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.3);
+}
+
+#proImage{
+    max-width: 5rem;
+    margin: 1rem 0;
+}

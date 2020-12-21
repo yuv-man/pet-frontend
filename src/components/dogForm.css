@@ -1,0 +1,74 @@
+.formInputs{
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    grid-gap: 3rem;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.pet-title{
+    color: #F2561D;
+    text-align: center;
+    margin-top: 0;
+}
+
+.form{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    margin: 2rem auto;
+    width: 60%;
+}
+
+#dog-photo{
+    margin: 2rem 0 0 0;
+    padding: 1rem;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    background-color:#F8F8F6;
+}
+
+#dog-photo label{
+    margin-right: 4rem;
+}
+
+#dog-photo input{
+    border: none;
+    
+    width: 10rem
+}
+
+.petInput{
+    width: 10rem;
+    border: none;
+}
+
+.fullInput{
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    border-bottom: 1px solid rebeccapurple;
+}
+
+#add-pet{
+    background-color: #43D9BD;
+    padding: 1rem;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    margin: 3rem;
+    border-radius: 6px;
+    border: none;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 20px;
+    width: 20rem;
+    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.3);
+}
+
+#desc{
+    border: 1px solid #0798F2;
+    border-radius: 6px;
+    width: 90%;
+    padding: 1rem;
+}

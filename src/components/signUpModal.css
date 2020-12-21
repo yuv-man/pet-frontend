@@ -1,0 +1,92 @@
+
+#dogCartoon{
+    max-height: 80vh;
+    overflow: hidden;
+}
+
+.right-side{
+    margin-right: 2rem;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.sign-title{
+    color: #F2561D;
+    text-align: center;
+}
+
+.names{
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 1rem;
+    justify-content: space-evenly;
+}
+
+.names input{
+    border-radius: 6px;
+    padding: 1rem;
+}
+
+#first-name{
+    margin-right: 2rem;
+}
+
+.inputs{
+    border-radius: 6px;
+    padding: 1rem;
+    background-color: #FFFFFF;
+    margin: 0.5rem 1rem;
+}
+
+#sign-in{
+    border: none;
+    border-radius: 6px;
+    color: white;
+    padding: 1rem;
+    margin: 2rem 1rem;
+    background-color: #0798F2;
+    font-weight: bold;
+}
+
+.close{
+    display: inline;
+    background-color:#FDEAEA;
+    align-self: flex-start;
+    margin-left: 1rem;
+    border: none;
+    margin-top: 1rem;
+    border-radius: 50%;
+    color: #F2561D;
+}
+
+.login-inputs{
+    display: flex;
+    flex-flow: column nowrap;
+    width: 80%;
+    margin: 2rem auto 0 auto;
+}
+
+#title-login{
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #F2561D
+}
+
+#login-btn{
+    margin: 0 auto;
+    background-color: #0798F2;
+    border-radius: 6px;
+    border:none;
+    padding: 1rem;
+    color: white;
+    display: block;
+    font-family: 'Ubuntu', sans-serif;
+    margin: 2rem 1rem
+}
+
+#shiba-image{
+    margin: 0 auto;
+    display: block;
+    max-width: 15rem;
+}
+

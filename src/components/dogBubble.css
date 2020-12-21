@@ -1,0 +1,38 @@
+
+.dog-bubble{
+    display: flex;
+    flex-flow: row nowrap;
+    background-color: #D4EEFF;
+    border-radius: 20px;
+    padding: 1rem;
+    width: 60vw;
+    margin: 1rem auto;
+}
+
+.dog-image{
+    max-width: 200px;
+    border: 3px solid white;
+    border-radius: 10px;
+}
+
+.info{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    text-align: start;
+    margin-left: 2rem;
+}
+
+.desc{
+    background-color: #43D9BD;
+    padding: 1rem;
+    border-radius: 5px;
+    font-weight: bold;
+    border: none;
+    text-align: center;
+}
+
+.desc a{
+    color: white;
+    text-decoration: none;
+}
