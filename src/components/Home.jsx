@@ -1,15 +1,24 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { DogContext } from '../libs/DogContext'
 import groupDogs from '../images/groupDogs.png'
+import { getStorageInfo } from '../libs/api'
 
 
 function Home() {
 
-    const { user } = useContext(DogContext);
+    const { isLogin } = useContext(DogContext);
+    const [ firstName, setFirstName ] = useState('')
+
+    useEffect(() => {
+        if(isLogin){
+            const userId = localStorage.getItem('currentUser')
+            getStorageInfo(userId).then(user => setFirstName(user.firstName))            
+        }
+    }, [])
     
     return (
         <div>
-        {user ? <h1 className = 'header'>Welcome Back {user}</h1> 
+        {isLogin ? <h1 className = 'header'>Welcome Back, {firstName}</h1> 
             : <h1 className = 'header'>Find your new best friend!</h1>}
             
             <div className = 'title'>

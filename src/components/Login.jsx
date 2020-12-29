@@ -1,14 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import Modal from 'react-modal'
 import shibaInu from '../images/cuteShibaInu.png'
+import {  createToken, login } from '../libs/api'
+import { DogContext } from '../libs/DogContext'
 
 Modal.setAppElement("#root");
 
 function Login() {
 
+    const { isLogin, setIsLogin, errorMessage, setErrorMessage } = useContext(DogContext)
     const [ isOpen, setIsOpen ] = useState( false );
     const [ email, setEmail ] = useState('');
     const [ loginPassword, setLoginPassword ] = useState('');
+    const [ message, setMessage ] = useState('');
 
     const handleModal = (event) => {
         event.preventDefault();
@@ -17,12 +21,24 @@ function Login() {
 
     const handleModalClose = (event) => {
         event.preventDefault();
+        setErrorMessage( false )
+        setEmail('')
+        setLoginPassword('')
         setIsOpen( false )
     }
 
-    const handleModalSubmit = (event) => {
+    const handleModalSubmit = async(event) => {
+
         event.preventDefault();
-        setIsOpen( false )
+        const userId = await login(email, loginPassword)
+        if (!userId){
+            setErrorMessage( true )
+        } else {
+            localStorage.setItem('currentUser', userId)
+            createToken(userId, email)
+            setIsLogin( true )
+            setIsOpen( false )
+        }
     }
 
     return (
@@ -46,6 +62,7 @@ function Login() {
                         value= {loginPassword}
                         onChange = {(event) => setLoginPassword(event.target.value)}
                     />
+                    {errorMessage?<h3>e-mail or password is invalid</h3>:null}
                     <input id='login-btn' type='submit' 
                         onClick = {(event)=>{handleModalSubmit(event)}} value='Log In'/>
                 </div>

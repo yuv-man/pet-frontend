@@ -18,7 +18,7 @@ function DogProfile(props) {
         petObj = thePet[0];
     }
 
-    const avatarPath = 'http://localhost:5000/'
+    const avatarPath = 'http://localhost:5000/pets/'
 
     getPet(id);
 

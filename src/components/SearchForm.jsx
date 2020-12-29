@@ -35,7 +35,7 @@ function SearchForm() {
             </div>
                 <div className='search-form'>
                     <FaSearch className='search-icon'/>
-                    <input id='search-text' type='text' placeholder = 'search a friend' value = {search} 
+                    <input id='search-text' type='text' placeholder = 'search by breed' value = {search} 
                         onChange = {(event) => {setSearch(event.target.value)}}/>
                 </div>
                 <input id='search-btn' type='submit' 

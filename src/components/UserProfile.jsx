@@ -2,30 +2,44 @@ import React, { useEffect, useContext, useState } from 'react'
 import { DogContext } from '../libs/DogContext';
 import './userProfile.css'
 import imageProfile from '../images/shiba-inu-profile.png'
+import { getStorageInfo, updateUser } from '../libs/api'
+import { withRouter } from 'react-router-dom'
 
-function UserProfile() {
 
-    const { userProfile, setUserProfile, users, setUsers } = useContext(DogContext);
-    const [ firstName, setFirstName ] = useState('');
-    const [ lastName, setLastName ] = useState('');
-    const [ phone, setPhone ] = useState('');
-    const [ password, setPassword ] = useState('');
-    const [ email, setEmail ] = useState('');
-    const [ bio, setBio ] = useState('');
+function UserProfile({history}) {
 
+    const { currentUser, setCurrentUser, isLogin, setIsLogin } = useContext(DogContext);
+    const [ user, setUser ] = useState({firstName: '', lastName: '', phoneNumber: '',
+    password:'', email:'', isAdmin:'false', bio:'' })
+    const [ newPassword, setNewPassword ] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        setUserProfile({firstName: firstName, lastName: lastName, phoneNumber: phone, 
-            email: email, password: password, bio: bio})
-        setFirstName('');
-        setLastName('');
-        setPhone('');
-        setEmail('');
-        setPassword('');
-        setBio('');
+        if (newPassword){
+            user.password = newPassword;
+        }
+        updateUser(user.userId, user)
     }
 
+    const handleChange = (event) => {
+        setUser((user) => ({...user, [event.target.name] : event.target.value}))
+    }
+
+    const passwordChange = (event) => {
+        setNewPassword(event.target.value)
+    }
+
+    useEffect(() => {
+        setProfile()
+        { isLogin?console.log('cool'): history.push('/')}        
+    }, [])   
+    
+    const setProfile = async()=>{
+        const userId = localStorage.getItem('currentUser')
+        const user = await getStorageInfo(userId)
+            setUser(user)
+            return user
+    }   
     
     return (
         <form className='userForm'>
@@ -34,44 +48,44 @@ function UserProfile() {
                 <div className='userNames'>
                 <div className='fullUserInput' id='firstName'>
                     <label htmlFor='firstName'>Fisrt name</label>
-                    <input type='text' className='nameInput'
-                        value= {firstName}
-                        onChange = {(event) => setFirstName(event.target.value)}
+                    <input type='text' className='nameInput' name='firstName'
+                        value= {user && user.firstName}
+                        onChange = {handleChange}
                     />
                 </div>
                 <div className='fullUserInput'>
                     <label htmlFor="lastName">Last name</label>
                     <input type='text' name = 'lastName' className='nameInput' 
-                        value= {lastName}
-                        onChange = {(event) => setLastName(event.target.value)}
+                        value= {user && user.lastName}
+                        onChange = {handleChange}
                     />
                 </div>
                 </div>
                 <div className='fullUserInput'>
                     <label htmlFor='phone'>Phone number</label>
-                    <input className='userInput' type='tel' 
-                        value= {phone}
-                        onChange = {(event) => setPhone(event.target.value)}
+                    <input className='userInput' type='tel' name='phoneNumber' 
+                        value= {user && user.phoneNumber}
+                        onChange = {handleChange}
                     />
                 </div>
                 <div className='fullUserInput'>
                     <label htmlFor='email'>E-mail</label>
-                    <input className='userInput' type='email' 
-                        value= {email}
-                        onChange = {(event) => setEmail(event.target.value)}
+                    <input className='userInput' type='email' name='email'
+                        value= {user && user.email}
+                        onChange = {handleChange}
                     />
                 </div>
                 <div className='fullUserInput'>
-                    <label htmlFor='password'>Password</label>
-                    <input className='userInput' type='password'
-                        value= {password}
-                        onChange = {(event) => setPassword(event.target.value)}
+                    <label htmlFor='password'>New Password</label>
+                    <input className='userInput' type='password' name='password'
+                        value= {newPassword}
+                        onChange = {passwordChange}
                     />
                 </div>
                 <textarea id = 'bio' rows="5" cols="50" 
-                            className='userBio' type='text' placeholder="User bio"
-                            value= {bio}
-                            onChange = {(event) => setBio(event.target.value)}
+                            className='userBio' type='text' placeholder="User bio" name='bio'
+                            value= {user && user.bio}
+                            onChange = {handleChange}
                         /> 
                     <input id='change' type='submit' 
                         onClick = {(event)=>{handleSubmit(event)}} value='Save changes'/>
@@ -80,4 +94,4 @@ function UserProfile() {
     )
 }
 
-export default UserProfile
+export default withRouter(UserProfile)

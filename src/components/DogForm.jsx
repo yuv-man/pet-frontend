@@ -29,7 +29,7 @@ function DogForm() {
         formData.append('dogProfile', JSON.stringify(dogProfile))
 
         
-        fetch("http://localhost:5000/api/uploads", { 
+        fetch("http://localhost:5000/pets/uploads", { 
             method:'POST',
             body: formData
             })

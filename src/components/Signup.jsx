@@ -4,22 +4,23 @@ import { DogContext } from '../libs/DogContext'
 import cartoonDogs from '../images/cartoonDogs.jpg'
 import './signUpModal.css'
 import { v4 as uuidv4 } from 'uuid';
+import { getStorageInfo, createToken, signup } from '../libs/api'
 
 Modal.setAppElement("#root");
 
 
 function SignUp() {
 
-    const { userProfile, setUserProfile, users, setUsers } = useContext(DogContext);
+    const { isLogin, setIsLogin, errorMessage, setErrorMessage } = useContext(DogContext);
+    const [ userProfile, setUserProfile ] = useState({firstName: '', lastName: '', phoneNumber: '',
+        userId: uuidv4(), password:'', email:'', isAdmin:'false', bio:'' });
     const [ isOpen, setIsOpen ] = useState( false );
     const [ confirmPassword, setConfirmPassword ] = useState('');
-    const [ firstName, setFirstName ] = useState('');
-    const [ lastName, setLastName ] = useState('');
-    const [ phone, setPhone ] = useState('');
-    const [ password, setPassword ] = useState('');
-    const [ email, setEmail ] = useState('');
+    const [ message, setMessage ] = useState('')
 
-
+    const handleChange = (event) => {    
+        setUserProfile((userProfile) => ({...userProfile, [event.target.name]: event.target.value}))
+    }
     
     const handleModal = (event) => {
         event.preventDefault();
@@ -28,28 +29,43 @@ function SignUp() {
 
     const handleModalClose = (event) => {
         event.preventDefault();
-        setIsOpen( false )
-    }
-
-    const handleModalSubmit = (event) => {
-        event.preventDefault();
-        setUserProfile({firstName: firstName, lastName: lastName, phoneNumber: phone, 
-            email: email, password: password, userId: uuidv4()})
-        setFirstName('');
-        setLastName('');
-        setPhone('');
-        setEmail('');
-        setPassword('');
+        setUserProfile({firstName: '', lastName: '', phoneNumber: '',
+                userId: uuidv4(), password:'', email:''});
         setConfirmPassword('');
         setIsOpen( false )
     }
 
-    useEffect(() => {
-        if(userProfile.firstName){
-            setUsers((users) =>{ 
-                return [userProfile, ...users]})
+    const checkPassword = async () => {
+        if(userProfile.password === confirmPassword){
+            const result = await signup(userProfile.userId, 
+                userProfile.firstName, userProfile.lastName,
+                userProfile.email, userProfile.phoneNumber, userProfile.password)
+            if(!result){
+                createToken( userProfile.userId, userProfile.email );
+                localStorage.setItem('currentUser', userProfile.userId)
+                setIsOpen( false )
+                setIsLogin( true )
+                setUserProfile({firstName: '', lastName: '', phoneNumber: '',
+                    userId: uuidv4(), password:'', email:''});
+                setConfirmPassword('');
+            }else{
+                setMessage(result)
+                setErrorMessage( true )
+            }
+        } else {
+            setMessage('Confirmation password is not correct')
+            setErrorMessage( true )
         }
-    }, [userProfile])
+    }
+
+    const handleModalSubmit = (event) => {
+        event.preventDefault();
+        checkPassword()
+    }
+
+    useEffect(() => {
+        setErrorMessage( false )
+    }, [])
 
     return (
         <div className='sign-up-form'>
@@ -64,31 +80,32 @@ function SignUp() {
                     onClick = {(event)=>{handleModalClose(event)}} value='x'/>
                 <h1 className='sign-title'>Create Account</h1>
                 <div className='names'>
-                <input id='first-name' type='text' placeholder='Your First Name...' 
-                    value= {firstName}
-                    onChange = {(event) => setFirstName(event.target.value)}
+                <input id='first-name' type='text' name = 'firstName' placeholder='Your First Name...' 
+                    value= {userProfile.firstName}
+                    onChange = {handleChange}
                 />
-                <input type='text' placeholder='Your Last Name...' 
-                    value= {lastName}
-                    onChange = {(event) => setLastName(event.target.value)}
+                <input type='text' placeholder='Your Last Name...' name='lastName' 
+                    value= {userProfile.lastName}
+                    onChange = {handleChange}
                 />
                 </div>
                 <input className='inputs' type='tel' placeholder='Your Phone number...' 
-                    value= {phone}
-                    onChange = {(event) => setPhone(event.target.value)}
+                    name= 'phoneNumber' value= {userProfile.phoneNumber}
+                    onChange = {handleChange}
                 />
                 <input className='inputs' type='email' placeholder='Your Email...' 
-                    value= {email}
-                    onChange = {(event) => setEmail(event.target.value)}
+                    name = 'email' value= {userProfile.email}
+                    onChange = {handleChange}
                 />
                 <input className='inputs' type='password' placeholder='Your password.' 
-                    value= {password}
-                    onChange = {(event) => setPassword(event.target.value)}
+                    name = 'password' value= {userProfile.password}
+                    onChange = {handleChange}
                 />
                 <input className='inputs' type='password' placeholder='confirm password.' 
                     value= {confirmPassword}
                     onChange = {(event) => setConfirmPassword(event.target.value)}
                 />
+                {errorMessage?<h3>{message}</h3>:null}
                 <input id='sign-in' type='submit' 
                     onClick = {(event)=>{handleModalSubmit(event)}} value='Sign Up'/>
                 </div>

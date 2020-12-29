@@ -8,9 +8,9 @@ function DogsList() {
     const { pets, setPets } = useContext(DogContext)
 
     const getData = async() => {
-        const response = await fetch("http://localhost:5000/api/pets");
+        const response = await fetch("http://localhost:5000/pets/pets");
         const data = await response.json();
-        console.log(data)
+        // console.log(data)
         setPets(data);
     }
 
@@ -18,7 +18,7 @@ function DogsList() {
         getData()
     }, [])
 
-    const avatarPath = 'http://localhost:5000/'
+    const avatarPath = 'http://localhost:5000/pets/'
 
     return (
         <div className='dogList'>
