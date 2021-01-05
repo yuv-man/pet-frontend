@@ -23,7 +23,8 @@ form{
 }
 
 #search-text{
-    border: none
+    border: none;
+    width: 80%;
 }
 
 #search-btn{

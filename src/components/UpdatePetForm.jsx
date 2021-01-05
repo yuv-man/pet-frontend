@@ -1,12 +1,17 @@
 import React, { useState, useContext, useEffect } from 'react'
+import { DogContext } from '../libs/DogContext'
+import { withRouter } from 'react-router-dom'
 import './dogForm.css'
+import { getDogInfo } from '../libs/api'
 
-function DogForm() {
+function UpdatePetForm(props) {
 
+    const { isLogin } = useContext(DogContext)
     const [ dogProfile, setDogProfile ] = useState({
-        dogName: '',status:'available', height:'',weight:'',hypoallergenic:'no',
-        dietary: '', comment: '', dogType:'',dogGender:'male'
+        dogName: '',status:'', height:'',weight:'',hypoallergenic:'',
+        dietary: '', comment: '', dogType:'',dogGender:''
     })
+    
     const [ avatar, setAvatar ] = useState('');
     const [ newPet, setNewPet ] = useState('')
     const handleImage = (event) => {
@@ -19,35 +24,53 @@ function DogForm() {
         setDogProfile((dogProfile) => ({...dogProfile, [event.target.name]: event.target.value}))
     }
 
-    const postData = () => {
-
-        let formData = new FormData(); 
-        formData.append('avatar', avatar);
-        formData.append('dogProfile', JSON.stringify(dogProfile))
-
-        
-        fetch("http://localhost:5000/pets/uploads", { 
-            method:'POST',
-            body: formData
-            })
-            .then(success => { console.log('good job')})
-            .catch(error => console.log(error))
+    const postData = (id) => {
+        let formData = new FormData();
+        console.log(id)
+        if(avatar){
+            formData.append('avatar', avatar);
+            formData.append('dogProfile', JSON.stringify(dogProfile))
+            
+            fetch(`http://localhost:5000/pets/updateFile/${id}`, { 
+                method:'PUT',
+                body: formData
+                })
+                .then(success => { console.log('good job')})
+                .catch(error => console.log(error))
+        } else {
+            fetch(`http://localhost:5000/pets/update/${id}`, { 
+                method:'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dogProfile)
+                })
+                .then(success => { console.log('nice')})
+                .catch(error => console.log(error))
+        }
     }
 
     const handleSubmit = async(event) => {
         event.preventDefault();
-        setNewPet('new')
-        postData();
-        setDogProfile({dogName: '',status:'available', height:'',weight:'',hypoallergenic:'no',
-        dietary: '', comment: '', dogType:'',dogGender:'male'
-        })
+        postData(props.match.params.id);
         setAvatar('')
-    }    
+    } 
+    
+    const setProfile = async()=>{
+        const id = props.match.params.id
+        const dog = await getDogInfo(id)
+        setDogProfile(dog)
+            return dog
+    } 
+
+    useEffect(() => {
+            setProfile()
+    }, [])     
 
     return (
         <div>
             <form className='form'>
-                <h1 className='pet-title'>Create Dog Profile</h1>
+                <h1 className='pet-title'>Update Dog Profile</h1>
                 
                 <div className='formInputs'>
                 <div className='fullInput'>
@@ -60,10 +83,14 @@ function DogForm() {
                     <div className='fullInput'>
                         <label htmlFor='dogStatus'>Status</label>
                         <select className='petInput' name = 'status' id='status'
-                        onChange = {handleChange}>
-                            <option default value='available'>available</option>
-                            <option value='foster'>foster</option>
-                            <option value='adopt'>adopt</option>
+                            onChange = {handleChange}>
+                            <option value={dogProfile.status}>{dogProfile.status}</option>
+                            {dogProfile.status==='available'?null:
+                                <option value='available'>available</option>}
+                            {dogProfile.status==='Foster'?null:
+                                <option value='foster'>foster</option>}
+                            {dogProfile.status==='Adopt'?null:
+                                <option value='adopt'>adopt</option>}
                         </select>                          
                     </div>
                     <div className='fullInput'>
@@ -91,8 +118,9 @@ function DogForm() {
                         <label htmlFor='dogGender'>Dog gender</label>
                         <select className='petInput' name='dogGender' id='dogGender'
                         onChange = {handleChange}>
-                            <option value='male' default>Male</option>
-                            <option value='female'>Female</option>
+                            <option value={dogProfile.dogGender}>{dogProfile.dogGender}</option>
+                            {dogProfile.dogGender==='female' ?<option value='male'>Male</option>:
+                            <option value='female'>Female</option>}
                         </select> 
                     </div>
                     <div className='fullInput'>
@@ -106,8 +134,9 @@ function DogForm() {
                         <label htmlFor='hypoallergenic'>Hypoallergenic</label>
                         <select className='petInput' name='hypoallergenic' id='hypoallergenic'
                         onChange = {handleChange}>
-                            <option value='no' default>No</option>
-                            <option value='yes'>Yes</option>
+                            <option value={dogProfile.hypoallergenic}>{dogProfile.hypoallergenic}</option>
+                            {dogProfile.hypoallergenic==='yes' ?<option value='no'>No</option>:
+                            <option value='yes'>Yes</option>}
                         </select> 
                     </div>
                         <textarea id = 'desc' rows="5" cols="50" name='comment' 
@@ -125,13 +154,11 @@ function DogForm() {
                         </div>
                         </div>
                 </div>
-                <input id='add-pet' type='submit' 
-                    onClick = {(event)=>{handleSubmit(event)}} value='Add pet'/>
+                <input id='add-pet' type='submit' style={{backgroundColor: '#2A1B40'}}
+                    onClick = {(event)=>{handleSubmit(event)}} value='Update pet'/>
             </form>
         </div>
     )
 }
 
-export default DogForm
-
-// Type: French Buldog
+export default withRouter(UpdatePetForm)

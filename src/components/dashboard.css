@@ -1,0 +1,99 @@
+.cont{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    width: 100vw;
+    margin: 2rem auto;
+    text-align: left;
+}
+
+.users{
+    width: 42%;
+    background-color: #E2DFDA;
+    border-radius: 10px;
+}
+
+.title-user{
+    background-color: #344059;
+    color: #E2DFDA;
+    margin: 0;
+    padding: 1rem;
+    padding-left: 2rem;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.title-pet{
+    background-color: #BF0426;
+    color:#E2DFDA;
+    margin: 0;
+    padding: 1rem;
+    padding-left: 2rem;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.pets{
+    width: 42%;
+    background-color: #E2DFDA;
+    border-radius: 10px;
+    padding-bottom: 2rem;
+
+}
+
+.userBox{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    color: #5671A6;
+    background-color: white;
+    border: 1px solid#E2DFDA;
+    display: flex;
+    font-size: 16px;
+}
+
+.petBox{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    padding: .8rem 2rem;
+    color: #BF0426;
+    background-color: white;
+    border: 1px solid#E2DFDA;
+    display: flex;
+    font-size: 16px;
+    align-items: center;
+}
+
+.text{
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.userName{
+    width: 8rem;
+}
+
+.updateLink{
+    background-color: #8448D9;
+    color: white;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.15);
+}
+
+.updateLink a{
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    
+}
+
+.delete{
+    background-color: #656B8C;
+    color: white;
+    border-radius: 6px;
+    border: none;
+    padding: 0.5rem 1rem;
+}

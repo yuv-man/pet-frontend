@@ -1,21 +1,22 @@
 import React, { useState, useContext } from 'react'
 import Modal from 'react-modal'
 import shibaInu from '../images/cuteShibaInu.png'
-import {  createToken, login } from '../libs/api'
+import {  createToken, login, getStorageInfo } from '../libs/api'
 import { DogContext } from '../libs/DogContext'
+
 
 Modal.setAppElement("#root");
 
 function Login() {
 
-    const { isLogin, setIsLogin, errorMessage, setErrorMessage } = useContext(DogContext)
+    const { setIsLogin, errorMessage, setErrorMessage, setFirstName } = useContext(DogContext)
     const [ isOpen, setIsOpen ] = useState( false );
     const [ email, setEmail ] = useState('');
     const [ loginPassword, setLoginPassword ] = useState('');
-    const [ message, setMessage ] = useState('');
 
     const handleModal = (event) => {
         event.preventDefault();
+        setErrorMessage( false )
         setIsOpen( true )
     }
 
@@ -35,7 +36,9 @@ function Login() {
             setErrorMessage( true )
         } else {
             localStorage.setItem('currentUser', userId)
-            createToken(userId, email)
+            await createToken( email )
+            const user = await getStorageInfo(userId)
+            setFirstName(user.firstName)
             setIsLogin( true )
             setIsOpen( false )
         }

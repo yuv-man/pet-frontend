@@ -6,15 +6,15 @@ import { getStorageInfo } from '../libs/api'
 
 function Home() {
 
-    const { isLogin } = useContext(DogContext);
-    const [ firstName, setFirstName ] = useState('')
+    const { isLogin, firstName } = useContext(DogContext);
+    // const [ firstName, setFirstName ] = useState('')
 
-    useEffect(() => {
-        if(isLogin){
-            const userId = localStorage.getItem('currentUser')
-            getStorageInfo(userId).then(user => setFirstName(user.firstName))            
-        }
-    }, [])
+    // useEffect(() => {
+    //     if(isLogin){
+    //         const userId = localStorage.getItem('currentUser')
+    //         getStorageInfo(userId).then(user => setFirstName(user.firstName))            
+    //     }
+    // }, [])
     
     return (
         <div>

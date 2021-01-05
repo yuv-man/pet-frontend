@@ -1,0 +1,62 @@
+
+
+.myDogImage{
+    width: 120px;
+    height: auto;
+    max-height: 120px;
+    /* max-width: 120px; */
+    border-radius: 6px;
+    border: 2px solid white;
+}
+
+.dogBubble{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    background-color:#8F5BD9;
+    border-radius: 20px;
+    padding: 1rem;
+    width: 60vw;
+    margin: 1rem auto;
+    color: white;
+}
+
+.status{
+    margin-top: 0;
+}
+
+.statusB{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.dog-desc{
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.more-info{
+    background-color: #F2522E;
+    padding: 1rem;
+    border-radius: 5px;
+    font-weight: bold;
+    border: none;
+    text-align: center;
+}
+
+.more-info a{
+    color: white;
+    text-decoration: none;
+}
+
+.returnPet{
+    background-color:#2A1B40;
+    color: white;
+    text-align: center;
+    padding: .2rem;
+    border: none;
+    margin-top: 2rem;
+    border-radius: 10px;
+    width: 5rem
+}

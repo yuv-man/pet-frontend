@@ -3,22 +3,24 @@ import { DogContext } from '../libs/DogContext';
 import './userProfile.css'
 import imageProfile from '../images/shiba-inu-profile.png'
 import { getStorageInfo, updateUser } from '../libs/api'
-import { withRouter } from 'react-router-dom'
+import { withRouter, useHistory } from 'react-router-dom'
 
 
-function UserProfile({history}) {
+function UserProfile() {
 
-    const { currentUser, setCurrentUser, isLogin, setIsLogin } = useContext(DogContext);
+    const { setFirstName, isLogin, setIsLogin } = useContext(DogContext);
     const [ user, setUser ] = useState({firstName: '', lastName: '', phoneNumber: '',
-    password:'', email:'', isAdmin:'false', bio:'' })
+    password:'', email:'', isAdmin:'false', bio:'', _id:'' })
     const [ newPassword, setNewPassword ] = useState('');
+    const history = useHistory()
 
     const handleSubmit = (event) => {
         event.preventDefault();
         if (newPassword){
-            user.password = newPassword;
+            user.password = [newPassword];
         }
-        updateUser(user.userId, user)
+        setFirstName(user.firstName)
+        updateUser(user._id, user)
     }
 
     const handleChange = (event) => {
@@ -30,12 +32,16 @@ function UserProfile({history}) {
     }
 
     useEffect(() => {
-        setProfile()
-        { isLogin?console.log('cool'): history.push('/')}        
-    }, [])   
+        if(isLogin){
+            console.log('cool')
+            setProfile()
+        } else {
+            history.push('/')
+        }
+    }, [isLogin])   
     
     const setProfile = async()=>{
-        const userId = localStorage.getItem('currentUser')
+        const userId = await localStorage.getItem('currentUser')
         const user = await getStorageInfo(userId)
             setUser(user)
             return user

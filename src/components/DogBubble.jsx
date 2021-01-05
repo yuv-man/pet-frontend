@@ -7,8 +7,7 @@ import { DogContext } from '../libs/DogContext';
 
 function DogBubble(props) {
 
-    const { pets } = useContext(DogContext);
-    // console.log(props.avatar)
+    const { isAdmin } = useContext(DogContext);
 
     return (
         <div className='dog-bubble'>
@@ -22,9 +21,11 @@ function DogBubble(props) {
                 <h4>Type: {props.type}</h4>
                 <h4>Status: {props.status}</h4>
             </div>
+            <div className='btns'>
                 <div className='desc'>
                     <Link to={`DogProfile/${props.petId}`} >More details</Link>
                 </div>
+            </div>
             </div>
         </div>
     )

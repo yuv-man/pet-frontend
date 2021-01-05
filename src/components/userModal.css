@@ -1,0 +1,49 @@
+.info{
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+h4{
+    margin: 0.1rem
+}
+
+.userBtn button{
+    background-color: #D92D07;
+    border: none;
+    color: white;
+    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.15);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+}
+
+.info h1{
+    color: #484F73;
+    font-weight: bold;
+    margin-top: 0;
+    font-size: 50px;
+}
+
+.dogProp{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.dogName{
+    font-weight: bold;
+    width: 7rem;
+    margin-bottom: .5rem;
+}
+
+.info h2{
+    color: #165873;
+    margin-top: 0;
+}
+
+.dogBox{
+    background-color: #D5E7F2;
+    padding: 1rem;
+    margin-top: 2rem;
+    width: 20rem;
+    border-radius: 6px;
+}

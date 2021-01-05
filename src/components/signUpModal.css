@@ -8,6 +8,7 @@
     margin-right: 2rem;
     display: flex;
     flex-flow: column nowrap;
+    width: 60%
 }
 
 .sign-title{
@@ -36,14 +37,15 @@
     padding: 1rem;
     background-color: #FFFFFF;
     margin: 0.5rem 1rem;
+    width: 80%;
 }
 
 #sign-in{
     border: none;
     border-radius: 6px;
     color: white;
-    padding: 1rem;
-    margin: 2rem 1rem;
+    padding: 1rem 5rem;
+    margin: 1rem 1rem 0 1rem;
     background-color: #0798F2;
     font-weight: bold;
 }
@@ -90,3 +92,10 @@
     max-width: 15rem;
 }
 
+.error{
+    background-color: #F2A0A0;
+    color: #F20C0C;
+    border-radius: 6px;
+    padding: 1rem;
+    width: 80%
+}

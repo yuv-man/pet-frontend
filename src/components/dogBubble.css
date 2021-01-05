@@ -30,9 +30,16 @@
     font-weight: bold;
     border: none;
     text-align: center;
+    margin-right: 2rem;
 }
 
 .desc a{
     color: white;
     text-decoration: none;
+}
+
+.btns{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
 }

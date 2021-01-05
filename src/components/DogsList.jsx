@@ -8,9 +8,8 @@ function DogsList() {
     const { pets, setPets } = useContext(DogContext)
 
     const getData = async() => {
-        const response = await fetch("http://localhost:5000/pets/pets");
+        const response = await fetch("http://localhost:5000/pets");
         const data = await response.json();
-        // console.log(data)
         setPets(data);
     }
 
@@ -22,12 +21,12 @@ function DogsList() {
 
     return (
         <div className='dogList'>
-        {pets? pets.map(pet => 
-            <DogBubble key = {pet.dogId} 
+        {pets.length != 0 ? pets.map(pet => 
+            <DogBubble key = {pet._id} 
                 name = {pet.dogName} type = {pet.dogType} 
-                status = {pet.status} avatar = { avatarPath + pet.picture } petId = {pet.dogId}
+                status = {pet.status} avatar = { avatarPath + pet.picture } petId = {pet._id}
                 dogGender = {pet.dogGender} />
-        ): null}
+        ): <h1>No pets found</h1>}
         </div>
     )
 }

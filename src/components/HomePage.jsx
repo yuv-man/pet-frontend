@@ -19,6 +19,9 @@ import dogLogo from '../images/shiba-inu-logo.png'
 import DogsList from './DogsList';
 import DogProfile from './DogProfile';
 import DogForm from './DogForm'
+import UpdatePetForm from './UpdatePetForm'
+import Dashboard from './Dashboard';
+
 
 
 function HomePage (){
@@ -31,8 +34,10 @@ function HomePage (){
     const [ users, setUsers] = useState([]);
     const [ isAdmin, setIsAdmin ] = useState( true );
     const [ errorMessage, setErrorMessage ] = useState( false )
+    const [ firstName, setFirstName ] = useState('')
+    const [ myPets, setMyPets ] = useState()
 
-    const logout = () => {
+    const Logout = () => {
         setIsLogin( false );
         localStorage.setItem('token', null)
     }
@@ -40,7 +45,8 @@ function HomePage (){
     return (
         <Router>
         <DogContext.Provider value = {{ isLogin, setIsLogin, pets, setPets, users, setUsers, 
-            currentUser, setCurrentUser, errorMessage, setErrorMessage }}>
+            currentUser, setCurrentUser, errorMessage, setErrorMessage, 
+            firstName, setFirstName, myPets, setMyPets, isAdmin }}>
         <nav className = 'nav-bar'>
         <div className = 'nav-list'>
             <div className='left-header'>
@@ -61,9 +67,12 @@ function HomePage (){
                 {isAdmin ? <div>
                     <Link to="/petForm">Add Pet</Link>
                 </div> : null}
+                {isAdmin ? <div>
+                    <Link to="/dashboard">Dashboard</Link>
+                </div> : null}
             </div>
             {isLogin? <input className='sign-up' type='submit' 
-                value='Log out' onClick={logout}/> : <div className='right-header'>
+                value='Log out' onClick={Logout}/> : <div className='right-header'>
                 <Login/>
                 <SignUp />
             </div>}
@@ -72,7 +81,7 @@ function HomePage (){
             <Switch>
             <Route path="/search">
                 <SearchForm />
-                <DogsList/>
+                
             </Route>
             <Route path="/dogProfile/:dogId">
                 <DogProfile/>
@@ -83,8 +92,14 @@ function HomePage (){
             <Route path="/petForm">
                 <DogForm />
             </Route>
+            <Route path="/updatePet/:id">
+                <UpdatePetForm />
+            </Route>
             <Route path="/userProfile">
                 <UserProfile />
+            </Route>
+            <Route path="/dashboard">
+                <Dashboard />
             </Route>
             <Route path="/">
                 <Home />
