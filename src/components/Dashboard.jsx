@@ -1,20 +1,44 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { DogContext } from '../libs/DogContext'
 import UserModel from './UserModal'
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { FaEdit } from 'react-icons/fa';
 import { FaTrash } from 'react-icons/fa';
-import { getUsers, removeDog, removeDogFromUsers } from '../libs/api'
+import { FaUserShield } from 'react-icons/fa';
+import { FaUser } from 'react-icons/fa';
+import { getUsers, removeDog, removeDogFromUsers, 
+        removeUser, updateUser,removeOwner } from '../libs/api'
 import './dashboard.css'
 
 function Dashboard() {
 
-    const { pets, setPets } = useContext(DogContext)
+    const { pets, setPets, isLogin, update, setUpdate } = useContext(DogContext)
     const [ users, setUsers ] = useState()
+    const history = useHistory()
 
     const allUsers = async() =>{
         const data = await getUsers()
         setUsers(data)
+    }
+
+    const setAdmin = async(user) => { 
+        console.log(user)
+        if(user.admin){
+            user.admin = false
+        } else {
+            user.admin = true    
+        }
+        updateUser(user._id, user)
+        setUpdate(update + 1)
+    }
+
+    const deleteUser = (user) => {
+        let messege = window.confirm("Are you sure you want to delete the user?");
+        if (messege === true) {
+            removeOwner(user._id)
+            removeUser(user._id)
+            setUpdate(update - 1)
+        }
     }
 
     const getPets = async() => {
@@ -25,29 +49,40 @@ function Dashboard() {
 
     const deleteDog = (event, id) => {
         event.preventDefault()
-        removeDogFromUsers(id)
-        removeDog(id)
+        let messege = window.confirm("Are you sure you want to delete the dog?");
+        if (messege === true) {
+            removeDogFromUsers(id)
+            removeDog(id)
+        }
     }
 
     useEffect(() => {
-        allUsers()
-        getPets()
-    }, [])
+        if(isLogin){
+            allUsers()
+            getPets()
+        } else {
+            history.push('/')
+        }
+    }, [isLogin, update]) 
+
 
     return (
         <div className='cont'>
             <div className='users'>
             <h2 className='title-user'>Users</h2>
             {users? users.map(user => 
-                <div key={user._id}>
-                <div className='userBox'>
+                <div className='userBox' key={user._id}>
                 <div className='text'>
                     <h4 className='userName' style={{marginRight: '2rem'}}>{user.firstName} {user.lastName}</h4>
                     <h4>{user.admin?'Administrator':'Pet owner'}</h4> 
                 </div>
-                    <UserModel id = {user._id} name = {user.firstName + ' ' +user.lastName}
-                        phoneNumber ={user.phoneNumber} email = {user.email} />
-                    
+                <div className='btns'>
+                    <button className='admin' type='click' onClick={() => setAdmin(user)}>
+                    {user.admin?<FaUser/>:<FaUserShield/>}</button>
+                        <UserModel id = {user._id} name = {user.firstName + ' ' +user.lastName}
+                            phoneNumber ={user.phoneNumber} email = {user.email} />
+                    <button type='click' className='delete' 
+                    onClick={() => deleteUser(user)}> <FaTrash /></button>
                 </div>
                 </div>
             ):null}

@@ -12,19 +12,22 @@ function UserProfile() {
     const [ user, setUser ] = useState({firstName: '', lastName: '', phoneNumber: '',
     password:'', email:'', isAdmin:'false', bio:'', _id:'' })
     const [ newPassword, setNewPassword ] = useState('');
+    const [ message, setMessage ] = useState('')
     const history = useHistory()
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async(event) => {
         event.preventDefault();
         if (newPassword){
             user.password = [newPassword];
         }
         setFirstName(user.firstName)
-        updateUser(user._id, user)
+        const update = await updateUser(user._id, user)
+        setMessage(update);
     }
 
     const handleChange = (event) => {
         setUser((user) => ({...user, [event.target.name] : event.target.value}))
+        setMessage('')
     }
 
     const passwordChange = (event) => {
@@ -35,6 +38,7 @@ function UserProfile() {
         if(isLogin){
             console.log('cool')
             setProfile()
+            setMessage('')
         } else {
             history.push('/')
         }
@@ -42,7 +46,8 @@ function UserProfile() {
     
     const setProfile = async()=>{
         const userId = await localStorage.getItem('currentUser')
-        const user = await getStorageInfo(userId)
+        const id = userId.substring(1, userId.length -1)
+        const user = await getStorageInfo(id)
             setUser(user)
             return user
     }   
@@ -93,6 +98,7 @@ function UserProfile() {
                             value= {user && user.bio}
                             onChange = {handleChange}
                         /> 
+                    {message && <div>{message}</div>}
                     <input id='change' type='submit' 
                         onClick = {(event)=>{handleSubmit(event)}} value='Save changes'/>
             

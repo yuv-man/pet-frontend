@@ -6,12 +6,13 @@ import { FaAngleDoubleUp } from 'react-icons/fa';
 import { addPetToList, searchDog } from '../libs/api'
 import DogsList from './DogsList';
 import { DogContext } from '../libs/DogContext';
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 
 function SearchForm() {
 
-    const { pets, setPets } = useContext(DogContext)
+    const { pets, setPets, loading, setLoading } = useContext(DogContext)
     const [ search, setSearch ] = useState({dogType:'', status:'', 
         height:'', weight:'', dogName:''});
     const [ isAdvanced, setIsAdvanced ] = useState( false );
@@ -30,8 +31,10 @@ function SearchForm() {
 
     const handleSubmit = async(event) => {
         event.preventDefault();
+        setLoading( true )
         const results = await searchDog(search)
         setPets(results)
+        setLoading( false )
     }
 
     const advanced = 
@@ -72,6 +75,7 @@ function SearchForm() {
                 <div>
                     {isAdvanced? advanced : null}
                 </div>
+                <ClipLoader loading={loading} />
                 <DogsList/>
         </div>
     )

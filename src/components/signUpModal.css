@@ -20,7 +20,8 @@
     display: flex;
     flex-flow: row nowrap;
     padding: 1rem;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    width: 87%
 }
 
 .names input{
@@ -97,5 +98,7 @@
     color: #F20C0C;
     border-radius: 6px;
     padding: 1rem;
-    width: 80%
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
 }

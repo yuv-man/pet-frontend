@@ -6,14 +6,12 @@ import { getDogInfo } from '../libs/api'
 
 function UpdatePetForm(props) {
 
-    const { isLogin } = useContext(DogContext)
     const [ dogProfile, setDogProfile ] = useState({
         dogName: '',status:'', height:'',weight:'',hypoallergenic:'',
         dietary: '', comment: '', dogType:'',dogGender:''
     })
-    
+    const [ message, setMessage ] = useState('')
     const [ avatar, setAvatar ] = useState('');
-    const [ newPet, setNewPet ] = useState('')
     const handleImage = (event) => {
         if (event.target.files[0]){
             setAvatar(event.target.files[0])
@@ -21,38 +19,39 @@ function UpdatePetForm(props) {
     }
 
     const handleChange = (event) => {    
-        setDogProfile((dogProfile) => ({...dogProfile, [event.target.name]: event.target.value}))
+        setDogProfile((dogProfile) => ({...dogProfile, [event.target.name]: 
+            event.target.value}))
+        setMessage('')
     }
 
-    const postData = (id) => {
+    const postData = async(id) => {
         let formData = new FormData();
-        console.log(id)
         if(avatar){
             formData.append('avatar', avatar);
             formData.append('dogProfile', JSON.stringify(dogProfile))
-            
-            fetch(`http://localhost:5000/pets/updateFile/${id}`, { 
+            const response = await fetch(`http://localhost:5000/pets/updateFile/${id}`,{ 
                 method:'PUT',
                 body: formData
                 })
-                .then(success => { console.log('good job')})
-                .catch(error => console.log(error))
+                const res = await response.json()
+                return ('changes saved successfully')
         } else {
-            fetch(`http://localhost:5000/pets/update/${id}`, { 
+            const response = await fetch(`http://localhost:5000/pets/update/${id}`,{ 
                 method:'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(dogProfile)
                 })
-                .then(success => { console.log('nice')})
-                .catch(error => console.log(error))
+                const res = await response.json()
+                return ('changes saved successfully')
         }
     }
 
     const handleSubmit = async(event) => {
         event.preventDefault();
-        postData(props.match.params.id);
+        const result = await postData(props.match.params.id);
+        setMessage(result)
         setAvatar('')
     } 
     
@@ -65,6 +64,7 @@ function UpdatePetForm(props) {
 
     useEffect(() => {
             setProfile()
+            setMessage('')
     }, [])     
 
     return (
@@ -145,7 +145,6 @@ function UpdatePetForm(props) {
                             onChange = {handleChange}
                         /> 
                     <div>
-                        
                         <div id='dog-photo'>   
                         <label>Dog Image</label>
                         <input type='file'  
@@ -153,7 +152,10 @@ function UpdatePetForm(props) {
                         /> 
                         </div>
                         </div>
-                </div>
+                        </div>
+                        {message&&<div className='msg'>
+                            {message}
+                        </div>}
                 <input id='add-pet' type='submit' style={{backgroundColor: '#2A1B40'}}
                     onClick = {(event)=>{handleSubmit(event)}} value='Update pet'/>
             </form>

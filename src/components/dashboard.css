@@ -97,3 +97,13 @@
     border: none;
     padding: 0.5rem 1rem;
 }
+
+.admin{
+    font-size: 18px;
+    margin-right: 1rem;
+    background-color:#732A19;
+    border-radius: 6px;
+    border: none;
+    padding: 0.3rem 0.5rem;
+    color: white;
+}

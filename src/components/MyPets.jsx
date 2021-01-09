@@ -7,7 +7,7 @@ import sadShibaInu from '../images/sad-shiba-inu.png'
 
 function MyPets() {
     
-    const { isLogin, myPets, setMyPets } = useContext(DogContext)
+    const { isLogin, myPets, setMyPets, update } = useContext(DogContext)
     const history = useHistory()
     const avatarPath = 'http://localhost:5000/pets/'
 
@@ -25,15 +25,15 @@ function MyPets() {
         } else {
             history.push('/')
         }
-        
-    }, [isLogin])
+    }, [isLogin, update])
 
     return (
         <div className='dogList'>
         {myPets ? myPets.map(pet => 
             <MyPetBubble key = {pet._id} 
                 name = {pet.dogName} type = {pet.dogType} 
-                status = {pet.status} avatar = { avatarPath + pet.picture } petId = {pet._id}
+                status = {pet.status} avatar = { avatarPath + pet.picture } 
+                petId = {pet._id} 
                 dogGender = {pet.dogGender} />
         ): <div className='sad-shiba-inu'>
             <img src={sadShibaInu}/>

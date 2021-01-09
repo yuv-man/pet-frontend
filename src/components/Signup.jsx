@@ -4,18 +4,22 @@ import { DogContext } from '../libs/DogContext'
 import cartoonDogs from '../images/cartoonDogs.jpg'
 import './signUpModal.css'
 import { getStorageInfo, createToken, signup } from '../libs/api'
+import ClipLoader from "react-spinners/ClipLoader";
+import { useHistory } from 'react-router-dom'
 
 Modal.setAppElement("#root");
 
 
 function SignUp() {
 
-    const { isLogin, setIsLogin, errorMessage, setErrorMessage, firstName, setFirstName } = useContext(DogContext);
+    const { isLogin, setIsLogin, errorMessage, setErrorMessage, 
+            setFirstName, loading, setLoading } = useContext(DogContext);
     const [ userProfile, setUserProfile ] = useState({firstName: '', lastName: '', phoneNumber: '',
         password:'', email:'', admin:'false', bio:'' });
     const [ isOpen, setIsOpen ] = useState( false );
     const [ confirmPassword, setConfirmPassword ] = useState('');
     const [ message, setMessage ] = useState('')
+    const history = useHistory()
 
     const handleChange = (event) => {    
         setUserProfile((userProfile) => ({...userProfile, [event.target.name]: event.target.value}))
@@ -50,6 +54,8 @@ function SignUp() {
                 setUserProfile({firstName: '', lastName: '', phoneNumber: '',
                     password:'', email:''});
                 setConfirmPassword('');
+                history.push('/')
+
             }else{
                 setMessage(result)
                 setErrorMessage( true )
@@ -78,7 +84,9 @@ function SignUp() {
             setMessage('password is missing')
             setErrorMessage( true )
         } else {
+            setLoading( true )
             checkPassword()
+            setLoading( false )
         }
     }
 
@@ -128,6 +136,7 @@ function SignUp() {
                 {errorMessage?<h3 className='error' >{message}</h3>:null}
                 <input id='sign-in' type='submit' 
                     onClick = {(event)=>{handleModalSubmit(event)}} value='Sign Up'/>
+                    <ClipLoader loading={loading} />
                 </form>
                 <img id='dogCartoon' src={cartoonDogs} alt='dogs'/>
             </Modal>          

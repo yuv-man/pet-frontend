@@ -16,7 +16,6 @@ import Login from './Login'
 import SearchForm from './SearchForm'
 import MyPets from './MyPets'
 import dogLogo from '../images/shiba-inu-logo.png'
-import DogsList from './DogsList';
 import DogProfile from './DogProfile';
 import DogForm from './DogForm'
 import UpdatePetForm from './UpdatePetForm'
@@ -32,21 +31,24 @@ function HomePage (){
     const [ currentUser, setCurrentUser ] = useState();
     const [ pets, setPets ] = useState([]);
     const [ users, setUsers] = useState([]);
-    const [ isAdmin, setIsAdmin ] = useState( true );
+    const [ isAdmin, setIsAdmin ] = useState( false );
     const [ errorMessage, setErrorMessage ] = useState( false )
     const [ firstName, setFirstName ] = useState('')
     const [ myPets, setMyPets ] = useState()
+    const [ update, setUpdate ] = useState(0)
 
     const Logout = () => {
         setIsLogin( false );
+        setIsAdmin( false )
         localStorage.setItem('token', null)
     }
 
     return (
         <Router>
-        <DogContext.Provider value = {{ isLogin, setIsLogin, pets, setPets, users, setUsers, 
-            currentUser, setCurrentUser, errorMessage, setErrorMessage, 
-            firstName, setFirstName, myPets, setMyPets, isAdmin }}>
+        <DogContext.Provider value = {{ isLogin, setIsLogin, pets, setPets, 
+            users, setUsers,currentUser, setCurrentUser, errorMessage, 
+            setErrorMessage, firstName, setFirstName, myPets, 
+            setMyPets, isAdmin, setIsAdmin, loading , setLoading, update, setUpdate }}>
         <nav className = 'nav-bar'>
         <div className = 'nav-list'>
             <div className='left-header'>

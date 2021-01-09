@@ -3,16 +3,19 @@ import Modal from 'react-modal'
 import shibaInu from '../images/cuteShibaInu.png'
 import {  createToken, login, getStorageInfo } from '../libs/api'
 import { DogContext } from '../libs/DogContext'
+import { useHistory } from 'react-router-dom'
 
 
 Modal.setAppElement("#root");
 
 function Login() {
 
-    const { setIsLogin, errorMessage, setErrorMessage, setFirstName } = useContext(DogContext)
+    const { setIsLogin, errorMessage, setErrorMessage, 
+        setFirstName, setIsAdmin } = useContext(DogContext)
     const [ isOpen, setIsOpen ] = useState( false );
     const [ email, setEmail ] = useState('');
     const [ loginPassword, setLoginPassword ] = useState('');
+    const history = useHistory()
 
     const handleModal = (event) => {
         event.preventDefault();
@@ -36,12 +39,17 @@ function Login() {
             setErrorMessage( true )
         } else {
             localStorage.setItem('currentUser', userId)
+            const id = userId.substring(1, userId.length -1)
             await createToken( email )
-            const user = await getStorageInfo(userId)
+            const user = await getStorageInfo(id)
             setFirstName(user.firstName)
             setIsLogin( true )
             setIsOpen( false )
-        }
+            history.push('/')
+            if(user.admin){
+                setIsAdmin( true )
+            }
+        } 
     }
 
     return (
@@ -65,7 +73,7 @@ function Login() {
                         value= {loginPassword}
                         onChange = {(event) => setLoginPassword(event.target.value)}
                     />
-                    {errorMessage?<h3>e-mail or password is invalid</h3>:null}
+                    {errorMessage?<h3 className='error' >e-mail or password is invalid</h3>:null}
                     <input id='login-btn' type='submit' 
                         onClick = {(event)=>{handleModalSubmit(event)}} value='Log In'/>
                 </div>

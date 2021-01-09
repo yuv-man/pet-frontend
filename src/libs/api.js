@@ -77,6 +77,18 @@ const updateUser = async(userId, data) => {
         },
         body: JSON.stringify({data})
     }) 
+    const result = await response.json()
+    if(result){
+        return('changes saved successfully')
+    }
+}
+
+const removeUser = async(id) => {
+    const response = await fetch(`${baseUrl}/users/${id}`, {
+        method: 'DELETE'
+    })
+    const data = await response.text()
+    return data
 }
 
 const addPetToList = async( status, petId, userId ) => {
@@ -116,6 +128,17 @@ const updateDogStatus = async(status, userId , petId) => {
     const result = await response.json()
 }
 
+const removeOwner = async(id) => {
+    const response = await fetch(`${baseUrl}/pets/owner/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        }, 
+        body: JSON.stringify({id})
+    })
+    const result = await response.text()
+}
+
 const getMyPets = async(id) => {
     const response = await fetch(`${baseUrl}/pets/myPets/${id}`)
     let data = await response.json()
@@ -150,4 +173,5 @@ const removeDogFromUsers = async(id) => {
 
 export { createToken, getStorageInfo, updateUser, signup, 
         login, searchDog, updateDogStatus, addPetToList,
-        getMyPets, getDogInfo, removeDog, getUsers, removeDogFromUsers }
+        getMyPets, getDogInfo, removeDog, getUsers, removeDogFromUsers,
+        removeUser, removeOwner }

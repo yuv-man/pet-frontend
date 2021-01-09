@@ -1,19 +1,25 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { FaMars } from 'react-icons/fa';
 import { FaVenus } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import './myPetBubble.css' 
+import { DogContext } from '../libs/DogContext' 
 import { updateDogStatus, addPetToList } from '../libs/api'
 
 
 function MyPetBubble(props) {
 
+    const { update, setUpdate } = useContext(DogContext)
     const returnPet = async(event) => {
         event.preventDefault()
-        const localId = await localStorage.getItem('currentUser')
-        const userId = localId.substring(1, localId.length - 1);
-        updateDogStatus('available', userId , props.petId)
-        addPetToList('available', props.petId, userId)
+        let messege = window.confirm("Are you sure you want return the dog?");
+        if (messege === true) {
+            const localId = await localStorage.getItem('currentUser')
+            const userId = localId.substring(1, localId.length - 1);
+            updateDogStatus('available', userId , props.petId)
+            addPetToList('available', props.petId, userId)
+            setUpdate(update + 1)
+        }
     }
 
     return (

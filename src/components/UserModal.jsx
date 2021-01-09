@@ -42,7 +42,7 @@ function UserModal(props) {
                 <h4><FaEnvelope />   {props.email}</h4>
                 <div className='dogBox'>
                 <h2><FaDog/> User's Pets</h2>
-                {myPets? myPets.map(pet => <li className='dogProp'>
+                {myPets? myPets.map(pet => <li key = {pet._id} className='dogProp'>
                 <div className='dogName'><FaPaw/>  {pet.dogName}</div>
                 <div >{pet.dogType}</div></li>):<div>None</div>}
                 </div>
