@@ -1,8 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState } from 'react'
 import './dogForm.css'
 
 function DogForm() {
 
+    // const baseUrl = 'http://localhost:5000'
+    const baseUrl = 'https://pet-backend-yuval.herokuapp.com'
     const [ dogProfile, setDogProfile ] = useState({
         dogName: '',status:'available', height:'',weight:'',hypoallergenic:'no',
         dietary: '', comment: '', dogType:'',dogGender:'male'
@@ -26,7 +28,7 @@ function DogForm() {
         formData.append('dogProfile', JSON.stringify(dogProfile))
 
         
-        fetch("http://localhost:5000/pets/uploads", { 
+        fetch(`${baseUrl}/pets/uploads`, { 
             method:'POST',
             body: formData
             })

@@ -3,7 +3,7 @@ import Modal from 'react-modal'
 import { DogContext } from '../libs/DogContext'
 import cartoonDogs from '../images/cartoonDogs.jpg'
 import './signUpModal.css'
-import { getStorageInfo, createToken, signup } from '../libs/api'
+import { createToken, signup } from '../libs/api'
 import ClipLoader from "react-spinners/ClipLoader";
 import { useHistory } from 'react-router-dom'
 
@@ -12,7 +12,7 @@ Modal.setAppElement("#root");
 
 function SignUp() {
 
-    const { isLogin, setIsLogin, errorMessage, setErrorMessage, 
+    const { setIsLogin, errorMessage, setErrorMessage, 
             setFirstName, loading, setLoading } = useContext(DogContext);
     const [ userProfile, setUserProfile ] = useState({firstName: '', lastName: '', phoneNumber: '',
         password:'', email:'', admin:'false', bio:'' });

@@ -3,7 +3,7 @@ import './searchForm.css'
 import { FaSearch } from 'react-icons/fa'
 import { FaAngleDoubleDown } from 'react-icons/fa';
 import { FaAngleDoubleUp } from 'react-icons/fa';
-import { addPetToList, searchDog } from '../libs/api'
+import { searchDog } from '../libs/api'
 import DogsList from './DogsList';
 import { DogContext } from '../libs/DogContext';
 import ClipLoader from "react-spinners/ClipLoader";
@@ -12,7 +12,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 function SearchForm() {
 
-    const { pets, setPets, loading, setLoading } = useContext(DogContext)
+    const { setPets, loading, setLoading } = useContext(DogContext)
     const [ search, setSearch ] = useState({dogType:'', status:'', 
         height:'', weight:'', dogName:''});
     const [ isAdvanced, setIsAdvanced ] = useState( false );

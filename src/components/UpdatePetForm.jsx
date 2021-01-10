@@ -1,11 +1,12 @@
-import React, { useState, useContext, useEffect } from 'react'
-import { DogContext } from '../libs/DogContext'
+import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import './dogForm.css'
 import { getDogInfo } from '../libs/api'
 
 function UpdatePetForm(props) {
 
+    // const baseUrl = 'http://localhost:5000'
+    const baseUrl = 'https://pet-backend-yuval.herokuapp.com'
     const [ dogProfile, setDogProfile ] = useState({
         dogName: '',status:'', height:'',weight:'',hypoallergenic:'',
         dietary: '', comment: '', dogType:'',dogGender:''
@@ -29,14 +30,14 @@ function UpdatePetForm(props) {
         if(avatar){
             formData.append('avatar', avatar);
             formData.append('dogProfile', JSON.stringify(dogProfile))
-            const response = await fetch(`http://localhost:5000/pets/updateFile/${id}`,{ 
+            const response = await fetch(`${baseUrl}/pets/updateFile/${id}`,{ 
                 method:'PUT',
                 body: formData
                 })
                 const res = await response.json()
                 return ('changes saved successfully')
         } else {
-            const response = await fetch(`http://localhost:5000/pets/update/${id}`,{ 
+            const response = await fetch(`${baseUrl}/pets/update/${id}`,{ 
                 method:'PUT',
                 headers: {
                     'Content-Type': 'application/json'

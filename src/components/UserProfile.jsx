@@ -8,7 +8,7 @@ import { withRouter, useHistory } from 'react-router-dom'
 
 function UserProfile() {
 
-    const { setFirstName, isLogin, setIsLogin } = useContext(DogContext);
+    const { setFirstName, isLogin } = useContext(DogContext);
     const [ user, setUser ] = useState({firstName: '', lastName: '', phoneNumber: '',
     password:'', email:'', isAdmin:'false', bio:'', _id:'' })
     const [ newPassword, setNewPassword ] = useState('');

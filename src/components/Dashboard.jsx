@@ -12,6 +12,8 @@ import './dashboard.css'
 
 function Dashboard() {
 
+    // const baseUrl = 'http://localhost:5000'
+    const baseUrl = 'https://pet-backend-yuval.herokuapp.com'
     const { pets, setPets, isLogin, update, setUpdate } = useContext(DogContext)
     const [ users, setUsers ] = useState()
     const history = useHistory()
@@ -42,7 +44,7 @@ function Dashboard() {
     }
 
     const getPets = async() => {
-        const response = await fetch("http://localhost:5000/pets");
+        const response = await fetch(`${baseUrl}/pets`);
         const data = await response.json();
         setPets(data);
     }

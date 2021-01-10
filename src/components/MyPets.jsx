@@ -6,10 +6,13 @@ import { useHistory } from 'react-router-dom'
 import sadShibaInu from '../images/sad-shiba-inu.png'
 
 function MyPets() {
-    
+
+
+    // const baseUrl = 'http://localhost:5000'
+    const baseUrl = 'https://pet-backend-yuval.herokuapp.com'
     const { isLogin, myPets, setMyPets, update } = useContext(DogContext)
     const history = useHistory()
-    const avatarPath = 'http://localhost:5000/pets/'
+    const avatarPath = `${baseUrl}/pets/`
 
 
     const myDogs = async() => {

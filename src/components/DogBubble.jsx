@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React from 'react'
 import './dogBubble.css'
 import { FaMars } from 'react-icons/fa';
 import { FaVenus } from 'react-icons/fa';
@@ -7,7 +7,6 @@ import { DogContext } from '../libs/DogContext';
 
 function DogBubble(props) {
 
-    const { isAdmin } = useContext(DogContext);
 
     return (
         <div className='dog-bubble'>

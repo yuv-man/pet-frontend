@@ -10,6 +10,8 @@ import { updateDogStatus, addPetToList } from '../libs/api'
 
 function DogProfile(props) {
 
+    // const baseUrl = 'http://localhost:5000'
+    const baseUrl = 'https://pet-backend-yuval.herokuapp.com'
     const { pets, setPets, isLogin } = useContext(DogContext)
     const id = (props.match.params.dogId);
     let petObj = {};
@@ -27,7 +29,7 @@ function DogProfile(props) {
         addPetToList(event.target.name, id, userId)
     }
 
-    const avatarPath = 'http://localhost:5000/pets/'
+    const avatarPath = `${baseUrl}/pets/`
     
     getPet(id);
 
